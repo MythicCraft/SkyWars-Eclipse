@@ -1,0 +1,34 @@
+# The trail GUI is the inventory menu that opens on /trails
+Trail-GUI:
+
+  # If disabled then /trails will be based off of commands only!
+  Enabled: true
+
+  # Color codes are supported
+  Title: '&8Trails GUI'
+
+  # The size of the GUI
+  Size:
+    # Automatically calculate GUI size based on total number of trails
+    Automatic: true
+    # Rows/height of the GUI (only works if automatic is set to false)
+    Rows: 3
+
+
+
+# In this section you can configure different trails along with the display item which will be shown in the GUI
+#
+# Format
+#
+# Trail-name:
+#   Display:
+#     Item: MATERIAL;DATA
+
+Trails:
+  Blood:
+    Display:
+
+  Music-Notes:
+    Display:
+      Item: RECORD;0
+      Name: ''

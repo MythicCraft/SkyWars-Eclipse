@@ -1,14 +1,19 @@
 package net.mythiccraft.skywars;
 
+import net.mythiccraft.skywars.config.FileConfig;
 import net.mythiccraft.skywars.hook.VaultUtil;
 import net.mythiccraft.skywars.menu.GUIManager;
 import net.mythiccraft.skywars.util.RandomFirework;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.text.NumberFormat;
 
 /**
  * The main class of the SkyWars plugin.
@@ -18,16 +23,48 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class SkyWars extends JavaPlugin {
 
     private static SkyWars instance;
-    private Location spawn;
+
+    // File configs
+    private FileConfig mainConfig;
+    private FileConfig dataConfig;
+    private FileConfig messagesConfig;
+    private FileConfig cagesConfig;
+    private FileConfig trailsConfig;
+    private FileConfig itemsConfig;
+    private FileConfig lobbyConfig;
+
     private GUIManager guiManager;
     private VaultUtil vaultUtil;
+    private Location spawn;
 
     @Override
     public void onEnable() {
+        // Start timer
+        long startTime = System.nanoTime();
+
         // Plugin startup logic
         if (!this.getDataFolder().exists() && !this.getDataFolder().mkdir()) {
-            this.getLogger().severe("Failed to create plugin directory! The plugin will now be disabled!");
+            severe("Failed to create plugin directory! The plugin will now be disabled!");
             this.setEnabled(false);
+        }
+
+        // setup configs
+        mainConfig = new FileConfig(this, "config.yml");
+        messagesConfig = new FileConfig(this, "messages.yml");
+        dataConfig = new FileConfig(this, "data.yml");
+        trailsConfig = new FileConfig(this, "trails.yml");
+        cagesConfig = new FileConfig(this, "cages.yml");
+        lobbyConfig = new FileConfig(this, "lobby.yml");
+        itemsConfig = new FileConfig(this, "items.yml");
+
+        File guisFolder = new File(this.getDataFolder() + "/guis/");
+        if (!guisFolder.exists() && !guisFolder.mkdir()) {
+            warn("Failed to create GUI folder! The plugin will now be disabled!");
+            setEnabled(false);
+        }
+
+        if (this.dataConfig.contains("Lobby")) {
+            spawn = this.dataConfig.getLocation("Lobby");
         }
 
         RandomFirework.loadFireworks();
@@ -39,6 +76,10 @@ public final class SkyWars extends JavaPlugin {
 
         // Set static instance of the plugin
         instance = this;
+
+        // Stop timer
+        long stopTime = System.nanoTime();
+        log("Startup complete! Took " + NumberFormat.getNumberInstance().format((stopTime - startTime / 1000000) + " ms."));
     }
 
     @Override
@@ -82,6 +123,17 @@ public final class SkyWars extends JavaPlugin {
     }
 
     /**
+     * Set the lobby spawnpoint to the specified location.
+     *
+     * @param location The location
+     */
+    public void setSpawn(Location location) {
+        this.spawn = location;
+        this.dataConfig.set("Lobby", location);
+        this.dataConfig.save();
+    }
+
+    /**
      * Register the specified event listener.
      *
      * @param listener The listener to be registered.
@@ -114,6 +166,11 @@ public final class SkyWars extends JavaPlugin {
         return spawn;
     }
 
+    /**
+     * Send the console a message - colors supported!
+     *
+     * @param msg The message
+     */
     public static void sendConsoleMsg(String msg) {
         Bukkit.getConsoleSender().sendMessage(msg.replaceAll("&", "§"));
     }
@@ -127,6 +184,74 @@ public final class SkyWars extends JavaPlugin {
     }
 
     public static void warn(String msg) {
-        log("§WARN: " + msg);
+        log("§cWARN: " + msg);
     }
+
+    public static void severe(String msg) {
+        log("§4SEVERE: " + msg);
+    }
+
+    private void loadConfigurations() {
+        mainConfig.load();
+        messagesConfig.load();
+        dataConfig.load();
+        trailsConfig.load();
+        cagesConfig.load();
+    }
+
+    /**
+     * Get the main configuration file.
+     *
+     * @return The main config
+     */
+    public FileConfig getMainConfig() {
+        return mainConfig;
+    }
+
+    /**
+     * Get the messages configuration file.
+     *
+     * @return The messages config
+     */
+    public FileConfig getMessagesConfig() {
+        return messagesConfig;
+    }
+
+    /**
+     * Get the data file config.
+     *
+     * @return The data config
+     */
+    public FileConfig getDataConfig() {
+        return dataConfig;
+    }
+
+    /**
+     * Get the cages configuration file.
+     *
+     * @return The cages config
+     */
+    public FileConfig getCagesConfig() {
+        return cagesConfig;
+    }
+
+    /**
+     * Get the trails configuration file.
+     *
+     * @return The trails config
+     */
+    public FileConfig getTrailsConfig() {
+        return trailsConfig;
+    }
+
+    /**
+     * Get the items configuration file.
+     *
+     * @return The items config
+     */
+    public FileConfig getItemsConfig() {
+        return itemsConfig;
+    }
+
+
 }

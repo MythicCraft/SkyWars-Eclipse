@@ -1,0 +1,22 @@
+
+# Is the lobby feature enabled?
+# Default: true
+Enabled: true
+
+# Should a player spawn at the lobby spawnpoint?
+# Default: true
+Teleport-to-Spawn: true
+
+Cosmetics:
+  Hats:
+    Hat1
+  Wardrobe:
+    Leather:
+      Black:
+
+    # Rainbow leather armor (changes colors)
+    Rainbow-Armor:
+      Enabled: true
+      # The lower the number the smoother the animation, but lowering
+      # this will tax the server cpu especially with lots of players.
+      Refresh-Rate: 5

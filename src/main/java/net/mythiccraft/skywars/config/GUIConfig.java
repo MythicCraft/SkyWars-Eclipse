@@ -149,4 +149,5 @@ public class GUIConfig extends FileConfig {
         gui.setItems(getItems());
         return gui;
     }
+
 }

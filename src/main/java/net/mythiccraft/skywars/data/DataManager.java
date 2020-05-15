@@ -8,12 +8,23 @@ import net.mythiccraft.skywars.util.Manager;
  */
 public class DataManager extends Manager {
 
+    private Storage storage;
+
     public DataManager(SkyWars plugin) {
         super(plugin);
     }
 
+    public void setup() {
+        if (plugin.getMainConfig().getBoolean("MySQL.Enabled")) {
+            storage = new MySQL(plugin);
+        } else {
+            storage = new SQLite(plugin);
+        }
+        storage.connect();
+    }
+
     @Override
     public void shutdown() {
-
+        storage.shutdown();
     }
 }

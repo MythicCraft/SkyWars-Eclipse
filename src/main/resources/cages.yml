@@ -1,0 +1,45 @@
+# Cages
+# %rarity% = rarity
+
+Cages:
+  Default:
+    Rarity: COMMON
+    Floor: GLASS
+    Sides: GLASS
+    Roof: GLASS
+    Display:
+      Material: GLASS
+      Amount: 1
+      Name: '&fDefault'
+      Lore:
+        - '&7The default cage.'
+        - ''
+        - '&7Rarity: %rarity%'
+
+  Light-Blue:
+    Rarity: UNCOMMON
+    Floor: LIGHT_BLUE_STAINED_GLASS
+    Sides: LIGHT_BLUE_STAINED_GLASS
+    Roof: LIGHT_BLUE_STAINED_GLASS
+    Display:
+      Material: LIGHT_BLUE_STAINED_GLASS
+      Amount: 1
+      Name: '&bLight Blue'
+      Lore:
+        - '&7A light blue cage.'
+        - ''
+        - '&7Rarity: %rarity%'
+
+  Monster-Cage:
+    Rarity: GODLIKE
+    Floor: SPAWNER
+    Sides: SPAWNER
+    Roof: SPAWNER
+    Display:
+      Material: SPAWNER
+      Amount: 1
+      Name: '&4Monster Cage'
+      Lore:
+        - '&7A monster spawner cage.'
+        - ''
+        - '&7Rarity: %rarity%'

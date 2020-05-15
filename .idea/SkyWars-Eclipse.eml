@@ -30,5 +30,7 @@
 		<level name="Maven: com.googlecode.json-simple:json-simple:1.1.1" value="project"/>
 		<level name="Maven: junit:junit:4.10" value="project"/>
 		<level name="Maven: org.hamcrest:hamcrest-core:1.1" value="project"/>
+		<level name="Maven: com.zaxxer:HikariCP:3.4.5" value="project"/>
+		<level name="Maven: org.slf4j:slf4j-api:1.7.25" value="project"/>
 	</levels>
 </component>

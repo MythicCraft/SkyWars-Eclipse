@@ -5,7 +5,9 @@ import com.google.common.io.ByteStreams;
 import net.mythiccraft.skywars.SkyWars;
 import net.mythiccraft.skywars.util.Text;
 
+import net.mythiccraft.skywars.util.Worlds;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -109,6 +111,10 @@ public class FileConfig {
         this.load();
     }
 
+    public boolean contains(String path) {
+        return config.contains(path);
+    }
+
     public FileConfiguration getConfig() {
         return this.config;
     }
@@ -156,17 +162,31 @@ public class FileConfig {
         return this.config.getBoolean(key);
     }
 
+    public float getFloat(String key) {
+        return (float) this.config.getDouble(key);
+    }
+
     public void set(String key, Object value) {
         this.config.set(key, value);
     }
 
     public void set(String key, Location value) {
-        this.config.set(key + ".World:", Objects.requireNonNull(value.getWorld()).getName());
+        this.config.set(key + ".World", Objects.requireNonNull(value.getWorld()).getName());
         this.config.set(key + ".X", value.getX());
         this.config.set(key + ".Y", value.getY());
         this.config.set(key + ".Z", value.getZ());
         this.config.set(key + ".Pitch", value.getPitch());
         this.config.set(key + ".Yaw", value.getYaw());
+    }
+
+    public Location getLocation(String path) {
+        World world = Worlds.getWorld(getString(path + ".World"));
+        double x = getDouble(path + ".X");
+        double y = getDouble(path + ".Y");
+        double z = getDouble(path + ".Z");
+        float pitch = getFloat(path + ".Pitch");
+        float yaw = getFloat(path + ".Yaw");
+        return new Location(world, x, y, z, yaw, pitch);
     }
 
     public boolean getBoolean(String key, boolean def) {

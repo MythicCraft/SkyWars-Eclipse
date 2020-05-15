@@ -4,11 +4,47 @@ main: net.mythiccraft.skywars.SkyWars
 prefix: SkyWars
 softdepend: [PlaceholderAPI, Vault, WorldGaurd, WorldEdit]
 authors: [taylorhughes719, Joshzen]
-author: taylorhughes719
 description: A custom SkyWars minigame plugin for MythicCraft.
 website: mythiccraft.net
+api-version: '1.15'
 commands:
   skywars:
     description: The main command for SkyWars.
+    aliases: [sw, skywar]
+  message:
+    description: Send a message to another player.
+    aliases: [msg]
+  reply:
+    decsription: Reply to last conversation.
+    aliases: [r]
+  spawn:
+    description: Teleport to the lobby spawnpoint.
+    aliases: [lobby]
+  kits:
+    description: The main command for SkyWars kits.
+    aliases: [kit]
   sgui:
-    description: Opens a GUI from SkyWars.
+    description: Open a skywars gui.
+
+permissions:
+  skywars.*:
+    description: Allows access to all features and commands.
+    default: false
+    children:
+      skywars.admin: true
+      skywars.chat: true
+      skywars.chat.color: true
+      skywars.help: true
+      skywars.help.admin: true
+  skywars.chat.color:
+    description: Allows the player to use color codes in chat.
+    default: false
+  skywars.chat:
+    description: Allows the player to use the chat.
+    default: true
+  skywars.help:
+    description: Allows access to the help command.
+    default: true
+  skywars.help.admin:
+    description: Allows the player to see the admin help page.
+    default: op

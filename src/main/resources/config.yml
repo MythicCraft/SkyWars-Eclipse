@@ -1,0 +1,72 @@
+# MythicCraft SkyWars
+# For spigot and paperspigot
+
+# Bungee mode requires MySQL and a BungeeCord network (obviously)
+# Default is false, and everything is run on the single server
+Bungee-Mode:
+  Enabled: false
+  # The server on the bungee network that is the lobby server.
+  Lobby-Server: 'lobby'
+  # Is this server for a SkyWars game or is it a lobby?
+  Game-Server: true
+
+# By default, MySQL is disabled and SQLite is used instead.
+# I recommend using MySQL for higher performance.
+MySQL:
+  # Use MySQL?
+  Enabled: false
+  Host: localhost
+  Port: 3306
+  # The database name (if using SQLite this is the database file name)
+  Database: skywars_db
+  Username: root
+  Password: root
+  # The maximum number of connections allowed at one time
+  Max-Connections: 10
+
+# Economy section
+Economy:
+  # Use vault as an additional currency along with coins and souls?
+  Use-Vault: false
+  Rewards:
+    Per-Kill:
+      Coins: 5
+      Souls: 1
+      # Only works if 'Use-Vault' is enabled.
+      Vault-Currency: 75
+    Per-Game-Played:
+      Coins: 3
+      Souls: 1
+      # Only works if 'Use-Vault' is enabled.
+      Vault-Currency: 50
+    Per-Win:
+      Coins: 15
+      Souls: 3
+      # Only works if 'Use-Vault' is enabled.
+      Vault-Currency: 150
+
+
+
+# Rarities go in the following order (least rare to most rare):
+# Common, Uncommon, Rare, Epic, Legendary, Godlike
+Rarities:
+  Common:
+    Display: "&7Common"
+  Uncommon:
+    Display: "&3Uncommon"
+  Rare:
+    Display: "&bRare"
+  Epic:
+    Display: "&dEpic"
+  Legendary:
+    Display: "&6Legendary"
+  Godlike:
+    Display: "&4Godlike"
+
+# Don't touch unless you know what you're doing
+Debug: false
+# Don't touch
+Dev-Mode: false
+# Please leave enabled :) It has little to no affect on performance.
+# It motivates me to work on the plugin.
+Anonymous-Statistics: true
