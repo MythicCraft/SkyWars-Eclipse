@@ -1,0 +1,11 @@
+Title: '&4&lTest'
+Size: 54
+Items:
+  ExampleItem:
+    Slot: 5
+    Material: GOLD_NUGGET
+    Amount: 1
+    Name: '&eCoins: %coins_bal%'
+    Lore: []
+    On-Click:
+      - '[Message] &aCoins Balance: &b%coins_bal%'

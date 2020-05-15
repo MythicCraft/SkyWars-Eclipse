@@ -1,0 +1,14 @@
+name: SkyWars
+version: ${project.version}
+main: net.mythiccraft.skywars.SkyWars
+prefix: SkyWars
+softdepend: [PlaceholderAPI, Vault, WorldGaurd, WorldEdit]
+authors: [taylorhughes719, Joshzen]
+author: taylorhughes719
+description: A custom SkyWars minigame plugin for MythicCraft.
+website: mythiccraft.net
+commands:
+  skywars:
+    description: The main command for SkyWars.
+  sgui:
+    description: Opens a GUI from SkyWars.

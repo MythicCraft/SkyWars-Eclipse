@@ -1,0 +1,27 @@
+Name: 'stats'
+Title: 'Player Stats'
+Size: 27
+Items:
+  Coins:
+    Slot: 5
+    Material: GOLD_NUGGET
+    Amount: 1
+    Name: '&eCoins: %coins_bal%'
+    Lore: []
+  Souls:
+    Slot: 6
+    Material: GHAST_TEAR
+    Amount: 1
+    Name: '&eSouls: &b%souls%'
+  Kills:
+    Slot: 3
+    Material: DIAMOND_SWORD
+    Amount: 1
+    Name: '&cKills: &c%kills%'
+    Lore: []
+  Deaths:
+    Slot: 4
+    Material: DIAMOND_SWORD
+    Amount: 1
+    Name: '&cDeaths: &c%deaths%'
+    Lore: []
