@@ -11,14 +11,14 @@ public interface Buyable {
 
     boolean isBuyable();
 
-    double getCost();
+    int getCost();
 
     String requiredCurrency();
 
-    Object getItem();
-
     ItemStack getDisplayItem();
 
-    ItemType getItemType();
+    Rarity getRarity();
+
+    ItemType getType();
 }
 
