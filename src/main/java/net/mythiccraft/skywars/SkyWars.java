@@ -1,5 +1,6 @@
 package net.mythiccraft.skywars;
 
+import net.mythiccraft.skywars.config.CagesConfig;
 import net.mythiccraft.skywars.config.FileConfig;
 import net.mythiccraft.skywars.hook.VaultUtil;
 import net.mythiccraft.skywars.menu.GUIManager;
@@ -28,10 +29,10 @@ public final class SkyWars extends JavaPlugin {
     private FileConfig mainConfig;
     private FileConfig dataConfig;
     private FileConfig messagesConfig;
-    private FileConfig cagesConfig;
     private FileConfig trailsConfig;
     private FileConfig itemsConfig;
     private FileConfig lobbyConfig;
+    private CagesConfig cagesConfig;
 
     private GUIManager guiManager;
     private VaultUtil vaultUtil;
@@ -53,7 +54,7 @@ public final class SkyWars extends JavaPlugin {
         messagesConfig = new FileConfig(this, "messages.yml");
         dataConfig = new FileConfig(this, "data.yml");
         trailsConfig = new FileConfig(this, "trails.yml");
-        cagesConfig = new FileConfig(this, "cages.yml");
+        cagesConfig = new CagesConfig(this);
         lobbyConfig = new FileConfig(this, "lobby.yml");
         itemsConfig = new FileConfig(this, "items.yml");
 
@@ -70,6 +71,7 @@ public final class SkyWars extends JavaPlugin {
         RandomFirework.loadFireworks();
 
         guiManager = new GUIManager(this);
+        guiManager.loadGUIs();
 
         vaultUtil = new VaultUtil(this);
         vaultUtil.setupEconomy();
@@ -231,7 +233,7 @@ public final class SkyWars extends JavaPlugin {
      *
      * @return The cages config
      */
-    public FileConfig getCagesConfig() {
+    public CagesConfig getCagesConfig() {
         return cagesConfig;
     }
 
@@ -253,5 +255,12 @@ public final class SkyWars extends JavaPlugin {
         return itemsConfig;
     }
 
-
+    /**
+     * Get the lobby configuration file.
+     *
+     * @return The lobby config
+     */
+    public FileConfig getLobbyConfig() {
+        return lobbyConfig;
+    }
 }

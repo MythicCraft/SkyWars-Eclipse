@@ -1,10 +1,14 @@
 package net.mythiccraft.skywars.game;
 
+import com.google.common.collect.BiMap;
 import net.mythiccraft.skywars.SkyWars;
 import net.mythiccraft.skywars.config.FileConfig;
 import net.mythiccraft.skywars.item.Cage;
+import net.mythiccraft.skywars.item.Rarity;
 import net.mythiccraft.skywars.util.Colors;
+import net.mythiccraft.skywars.util.Loadable;
 import net.mythiccraft.skywars.util.Text;
+import net.mythiccraft.skywars.util.Unloadable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,18 +16,19 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Taylor Hughes
  */
-public class Arena {
+public class Arena implements Loadable, Unloadable {
+
     private String name;
     private World world;
     private List<Location> spawnpoints;
+    private Map<Integer, Boolean> spawnMap;
     private boolean inProgress;
-    private List<Player> players;
+    private Set<Player> players;
     private int maxPlayers;
     private int minPlayers;
     private FileConfig config;
@@ -33,12 +38,12 @@ public class Arena {
         this.world = world;
         this.spawnpoints = spawnpoints;
         this.inProgress = inProgress;
-        this.players = new ArrayList<>();
+        this.players = new HashSet<>();
         this.config = new FileConfig(SkyWars.getInstance(), name);
-
+        this.spawnMap = new HashMap<>();
     }
 
-    public List<Player> getPlayers() {
+    public Set<Player> getPlayers() {
         return players;
     }
 
@@ -46,7 +51,7 @@ public class Arena {
         return this.players.size() == this.maxPlayers;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(Set<Player> players) {
         this.players = players;
     }
 
@@ -88,13 +93,9 @@ public class Arena {
 
     public void start() {
         this.setInProgress(true);
-        for (Player p : players) {
-            p.sendMessage(Text.colorize("The game is starting!"));
-        }
+        players.forEach(p -> p.sendMessage(Text.colorize("The game is starting!")));
         Bukkit.getScheduler().runTaskTimerAsynchronously(SkyWars.getInstance(), () -> {
-            for (Player p : players) {
-                p.sendMessage(Text.colorize("&bThe game is starting in 10 seconds"));
-            }
+            players.forEach(p -> p.sendMessage(Text.colorize("&bThe game is starting in 10 seconds")));
         }, 0L, 20L);
     }
 
@@ -115,9 +116,9 @@ public class Arena {
     }
 
     public void setupSpawnpoints() {
-        Cage cage = new Cage("default", 0, new ItemStack(Material.GLASS), (byte) 0);
+        Cage cage = new Cage("default", false, Rarity.COMMON);
         for (Location loc : spawnpoints) {
-            cage.build(loc);
+            cage.spawn(loc);
         }
     }
 
@@ -139,5 +140,21 @@ public class Arena {
 
     public void setMinPlayers(int minPlayers) {
         this.minPlayers = minPlayers;
+    }
+
+    /**
+     * Called when the arena is being loaded.
+     */
+    @Override
+    public void load() {
+
+    }
+
+    /**
+     * Called when the arena is unloaded.
+     */
+    @Override
+    public void unload() {
+
     }
 }

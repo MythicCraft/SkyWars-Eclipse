@@ -67,6 +67,3 @@ Rarities:
 Debug: false
 # Don't touch
 Dev-Mode: false
-# Please leave enabled :) It has little to no affect on performance.
-# It motivates me to work on the plugin.
-Anonymous-Statistics: true
