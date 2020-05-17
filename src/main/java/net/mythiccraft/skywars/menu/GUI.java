@@ -48,7 +48,8 @@ public class GUI implements GUIHolder, Loadable {
     @Override
     public void load() {
         this.config.load();
-
+        this.config.build();
+        this.setItems(this.config.getItems());
     }
 
     public SkyWars getPlugin() {
@@ -102,7 +103,7 @@ public class GUI implements GUIHolder, Loadable {
     @Override
     @NotNull
     public GUI getGUI() {
-        return this;
+        return this.config.build();
     }
 
     @NotNull

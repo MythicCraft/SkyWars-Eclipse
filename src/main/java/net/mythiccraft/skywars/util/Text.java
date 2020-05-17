@@ -27,7 +27,11 @@ public class Text {
 
 
     public static String colorize(String input) {
-        return ChatColor.translateAlternateColorCodes('&', input);
+        if (input == null) {
+            return "";
+        } else {
+            return ChatColor.translateAlternateColorCodes('&', input);
+        }
     }
 
     public static List<String> colorize(List<String> input) {

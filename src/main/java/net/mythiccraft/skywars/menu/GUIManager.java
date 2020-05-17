@@ -3,6 +3,7 @@ package net.mythiccraft.skywars.menu;
 import net.mythiccraft.skywars.SkyWars;
 import net.mythiccraft.skywars.util.Manager;
 
+import net.mythiccraft.skywars.util.Text;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -30,8 +31,12 @@ public class GUIManager extends Manager {
         if (guisFolder.exists()) {
             for (File file : guisFolder.listFiles()) {
                 GUI gui = new GUI(plugin, file.getName().replaceAll(".yml", ""));
-                guis.put(gui.getName(), gui);
+                gui = gui.getGUI();
+                guis.put(gui.getName().toLowerCase(), gui);
             }
+        }
+        for (String s : this.guis.keySet()) {
+            guis.get(s).load();
         }
     }
 
@@ -40,7 +45,11 @@ public class GUIManager extends Manager {
     }
 
     public void openGUI(Player who, String name) {
-        getGUI(name).open(who);
+        if (guis.containsKey(name.toLowerCase())) {
+            getGUI(name).open(who);
+        } else {
+            who.sendMessage(Text.colorize("&c&lERROR! &cA GUI with the name " + name + " does not exist!"));
+        }
     }
 
     @Override

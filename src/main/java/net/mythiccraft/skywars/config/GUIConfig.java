@@ -21,6 +21,10 @@ import java.util.stream.Collectors;
  */
 public class GUIConfig extends FileConfig {
 
+    public GUIConfig(SkyWars plugin, String name) {
+        this(plugin, new File(plugin.getDataFolder() + "/guis/" + name + ".yml"));
+    }
+
     public GUIConfig(SkyWars plugin, File file) {
         super(plugin, file);
     }

@@ -5,7 +5,7 @@ Items:
     Slot: 5
     Material: GOLD_NUGGET
     Amount: 1
-    Name: '&eCoins: %coins_bal%'
+    Name: '&eCoins: &c0 Coins'
     Lore: []
     On-Click:
-      - '[Message] &aCoins Balance: &b%coins_bal%'
+      - '[Message] &aCoins Balance: &c0 Coins'

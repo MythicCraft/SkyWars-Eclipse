@@ -29,6 +29,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -45,6 +46,7 @@
                     <stylesheetfile>${project.basedir}\stylesheet.css</stylesheetfile>
                 </configuration>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -112,7 +114,7 @@
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
-            <version>LATEST</version>
+            <version>1.7</version>
             <scope>provided</scope>
         </dependency>
 

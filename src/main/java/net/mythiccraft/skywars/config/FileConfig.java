@@ -6,6 +6,7 @@ import net.mythiccraft.skywars.SkyWars;
 import net.mythiccraft.skywars.util.Text;
 
 import net.mythiccraft.skywars.util.Worlds;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -124,7 +125,11 @@ public class FileConfig {
     }
 
     public String getString(String key) {
-        return Text.colorize(this.config.getString(key, null));
+        if (this.config.getString(key) == null) {
+            return "";
+        }
+        //noinspection ConstantConditions
+        return ChatColor.translateAlternateColorCodes('&', this.config.getString(key));
     }
 
     public String getString(String key, String def) {

@@ -1,8 +1,13 @@
 package net.mythiccraft.skywars;
 
+import net.mythiccraft.skywars.cmd.SGUICmd;
+import net.mythiccraft.skywars.cmd.SkyWarsCmd;
 import net.mythiccraft.skywars.config.CagesConfig;
 import net.mythiccraft.skywars.config.FileConfig;
+import net.mythiccraft.skywars.config.GUIConfig;
+import net.mythiccraft.skywars.event.InventoryListener;
 import net.mythiccraft.skywars.hook.VaultUtil;
+import net.mythiccraft.skywars.menu.GUI;
 import net.mythiccraft.skywars.menu.GUIManager;
 import net.mythiccraft.skywars.util.RandomFirework;
 
@@ -15,6 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.text.NumberFormat;
+import java.util.Objects;
 
 /**
  * The main class of the SkyWars plugin.
@@ -34,9 +40,15 @@ public final class SkyWars extends JavaPlugin {
     private FileConfig lobbyConfig;
     private CagesConfig cagesConfig;
 
+    private SkyWarsCmd skyWarsCmd;
+    private SGUICmd sguiCmd;
+
+    private InventoryListener inventoryListener;
     private GUIManager guiManager;
     private VaultUtil vaultUtil;
     private Location spawn;
+    private GUIConfig testGUIConf;
+    private GUI testGUI;
 
     @Override
     public void onEnable() {
@@ -58,17 +70,37 @@ public final class SkyWars extends JavaPlugin {
         lobbyConfig = new FileConfig(this, "lobby.yml");
         itemsConfig = new FileConfig(this, "items.yml");
 
+        mainConfig.load();
+        messagesConfig.load();
+        dataConfig.load();
+        trailsConfig.load();
+        cagesConfig.load();
+        lobbyConfig.load();
+        itemsConfig.load();
+
+        // setup gui configs
         File guisFolder = new File(this.getDataFolder() + "/guis/");
         if (!guisFolder.exists() && !guisFolder.mkdir()) {
             warn("Failed to create GUI folder! The plugin will now be disabled!");
             setEnabled(false);
         }
 
+        //testGUIConf = new GUIConfig(this, "testgui");
+       // testGUIConf.load();
+
+        testGUI = new GUI(this, "testgui");
+        testGUI.load();
+
+        // Set spawn
         if (this.dataConfig.contains("Lobby")) {
             spawn = this.dataConfig.getLocation("Lobby");
         }
 
         RandomFirework.loadFireworks();
+        inventoryListener = new InventoryListener(this);
+
+        this.getServer().getPluginManager().registerEvents(inventoryListener, this);
+
 
         guiManager = new GUIManager(this);
         guiManager.loadGUIs();
@@ -76,18 +108,31 @@ public final class SkyWars extends JavaPlugin {
         vaultUtil = new VaultUtil(this);
         vaultUtil.setupEconomy();
 
+        skyWarsCmd = new SkyWarsCmd(this);
+        sguiCmd = new SGUICmd(this);
+
+        // Register commands
+        if (this.getCommand("skywars") != null ) {
+            Objects.requireNonNull(this.getCommand("skywars")).setExecutor(skyWarsCmd);
+        }
+        if (this.getCommand("sgui") != null ) {
+            Objects.requireNonNull(this.getCommand("sgui")).setExecutor(sguiCmd);
+        }
+
         // Set static instance of the plugin
         instance = this;
 
         // Stop timer
         long stopTime = System.nanoTime();
-        log("Startup complete! Took " + NumberFormat.getNumberInstance().format((stopTime - startTime / 1000000) + " ms."));
+        //log("Startup complete! Took " + NumberFormat.getNumberInstance().format((stopTime - startTime / 1000000) + " ms."));
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         guiManager.shutdown();
+
+        HandlerList.unregisterAll(this);
 
         // Just to be safe, set the instance to null
         instance = null;
@@ -262,5 +307,9 @@ public final class SkyWars extends JavaPlugin {
      */
     public FileConfig getLobbyConfig() {
         return lobbyConfig;
+    }
+
+    public GUI getTestGUI() {
+        return testGUI;
     }
 }

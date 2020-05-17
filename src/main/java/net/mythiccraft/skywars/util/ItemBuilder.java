@@ -163,6 +163,9 @@ public class ItemBuilder {
     }
 
     public ItemStack build() {
+        if (this.lore == null) {
+            this.lore = new ArrayList<>();
+        }
         if (!this.lore.isEmpty()) {
             this.meta.setLore(this.lore);
         }
